@@ -2,16 +2,15 @@ const Product = require("../models/Product");
 
 exports.getAllProducts = async (req, res) => {
   try {
-    // Get pagination parameters from query string (default to page 1, 10 items per page)
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
 
-    // Get total count of products (for pagination metadata)
+    
     const totalItems = await Product.countDocuments();
     const totalPages = Math.ceil(totalItems / limit);
 
-    // Get paginated products
+    
     const products = await Product.find()
       .skip(skip)
       .limit(limit);
