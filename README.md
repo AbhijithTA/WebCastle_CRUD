@@ -20,7 +20,7 @@ The project is split into two main folders:
 .
 ├── client/ # Frontend - Next.js + Tailwind
 
-└── server/ # Backend - Node.js + Express + MongoDB
+└── backend / # Backend - Node.js + Express + MongoDB
 
 
 
@@ -55,7 +55,7 @@ The project is split into two main folders:
 ### 🔧 Backend Setup
 
 ```bash
-cd server
+cd backend
 npm install
 
 ```
