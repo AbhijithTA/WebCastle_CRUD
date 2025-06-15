@@ -18,7 +18,7 @@ This dashboard allows users to **create**, **read**, **update**, and **delete** 
 The project is split into two main folders:
 
 .
-├── client/ # Frontend - Next.js 
+├── client/ # Frontend - Next.js + Tailwind
 
 └── server/ # Backend - Node.js + Express + MongoDB
 
@@ -71,7 +71,7 @@ npm run start
 # Server will run at http://localhost:5000
 ```
 
-💻 Frontend Setup
+### 💻 Frontend Setup
 
 Create a .env file in the root of client/:
 ```bash
@@ -87,7 +87,8 @@ npm run dev
 # Frontend will run at http://localhost:3000
 ```
 
-📬 Postman Collection
+## 📬 Postman Collection
+
 You can test all API endpoints using the Postman collection available 
 ```bash
 https://.postman.co/workspace/barosa~67c6edd6-d51b-4b82-a138-2129340ad1d3/collection/33812661-194f3ac9-1fad-453c-81fa-e006b84118d3?action=share&creator=33812661&active-environment=33812661-b362c96a-24fd-476f-a3a8-52244eb90916
@@ -97,10 +98,12 @@ It includes pre-configured requests for all CRUD operations related to products.
 
 
 
-🛠️ Tech Stack
+## 🛠️ Tech Stack
 Frontend: Next.js, React, Tailwind CSS, Redux Toolkit, Axios
 
 Backend: Node.js, Express.js, MongoDB, Mongoose
+
+
 
 
 
