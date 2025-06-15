@@ -61,7 +61,7 @@ npm install
 ```
 Create a .env file in the root of server/:
 ```bash
-MONGO_URI = "mongodb+srv://vidtube:vidtube@vidtube.389el.mongodb.net/webCastle"
+MONGO_URI = mongodburl
 PORT = 5000
 ```
 
