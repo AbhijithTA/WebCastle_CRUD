@@ -91,7 +91,7 @@ npm run dev
 
 You can test all API endpoints using the Postman collection available 
 ```bash
-https://.postman.co/workspace/barosa~67c6edd6-d51b-4b82-a138-2129340ad1d3/collection/33812661-194f3ac9-1fad-453c-81fa-e006b84118d3?action=share&creator=33812661&active-environment=33812661-b362c96a-24fd-476f-a3a8-52244eb90916
+https://www.postman.com/material-observer-9175587/workspace/webcastle/request/33812661-6a9733eb-2b8a-46f2-b12a-b63a6990591d?action=share&creator=33812661&ctx=documentation
 ```
 It includes pre-configured requests for all CRUD operations related to products.
 
