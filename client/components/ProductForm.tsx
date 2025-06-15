@@ -11,7 +11,7 @@ type ProductData = {
 };
 
 type Props = {
-  initialData?: ProductData;
+  initialData?: ProductData | null;
   onSubmit: (data: ProductData) => void;
   submitText: string;
 };

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../store";
-import { fetchProducts } from "../store/productSlice";
+import { fetchProducts, removeProduct } from "../store/productSlice";
 import ProductCard from "../components/ProductCard";
 import { useRouter } from "next/navigation";
 import { deleteProduct } from "@/services/productService";
@@ -43,7 +43,7 @@ export default function Home() {
 
   const handleDelete = async (id: string) => {
     try {
-      await dispatch(deleteProduct(id));
+      await dispatch(removeProduct(id)).unwrap();
       dispatch(fetchProducts({ page: currentPage, limit: itemsPerPage }));
     } catch (error) {
       console.error("Failed to delete product:", error);
@@ -430,7 +430,6 @@ export default function Home() {
 
               {pagination?.totalPages > 1 && (
                 <div className="flex gap-1">
-                  {/* First Page */}
                   <button
                     onClick={() => handlePageChange(1)}
                     disabled={currentPage === 1}

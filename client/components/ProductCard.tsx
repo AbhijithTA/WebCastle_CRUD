@@ -99,7 +99,7 @@ const ProductCard: React.FC<ProductProps> = ({
 
   return (
     <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 overflow-hidden w-full max-w-sm mx-auto">
-      {/* Image Section */}
+
       <div className="relative overflow-hidden">
         {image && !imageError ? (
           <div className="relative">
@@ -132,8 +132,6 @@ const ProductCard: React.FC<ProductProps> = ({
             </div>
           </div>
         )}
-
-        {/* Category Badge */}
         {category && (
           <div className="absolute top-4 left-4">
             <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 backdrop-blur-sm bg-opacity-90">
@@ -143,21 +141,15 @@ const ProductCard: React.FC<ProductProps> = ({
         )}
       </div>
 
-      {/* Content Section */}
       <div className="p-6">
-        {/* Title */}
         <h2 className="text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-blue-600 transition-colors duration-200">
           {truncateText(title, 50)}
         </h2>
-
-        {/* Description */}
         {description && (
           <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3">
             {truncateText(description, 120)}
           </p>
         )}
-
-        {/* Price */}
         <div className="mb-6">
           <div className="flex items-baseline gap-2">
             <span className="text-2xl font-bold text-gray-900">
@@ -165,8 +157,6 @@ const ProductCard: React.FC<ProductProps> = ({
             </span>
           </div>
         </div>
-
-        {/* Action Buttons */}
         <div className="flex gap-3">
           <button
             onClick={handleEdit}
@@ -234,8 +224,6 @@ const ProductCard: React.FC<ProductProps> = ({
           </button>
         </div>
       </div>
-
-      {/* Subtle Animation Indicator */}
       <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
     </div>
   );
