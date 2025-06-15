@@ -33,13 +33,11 @@ const ProductCard: React.FC<ProductProps> = ({
   };
 
   const handleDelete = async () => {
-    const confirmDelete = await new Promise((resolve) => {
+    const shouldDelete = await new Promise((resolve) => {
       toast.custom(
         (t) => (
-          <div className="bg-white p-4 rounded-lg shadow-xl">
-            <p className="font-medium mb-4 text-red-600">
-              Are you sure you want to delete this product?
-            </p>
+          <div className="bg-white p-4 rounded-lg shadow-xl border border-gray-200">
+            <p className="font-medium mb-4 text-red-600">Delete this product?</p>
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => {
@@ -57,25 +55,25 @@ const ProductCard: React.FC<ProductProps> = ({
                 }}
                 className="px-3 py-1 bg-red-500 text-white hover:bg-red-600 rounded"
               >
-                Delete
+                Confirm Delete
               </button>
             </div>
           </div>
         ),
-        {
-          duration: Infinity, // Stays until user interacts
-        }
+        { duration: Infinity }
       );
     });
 
-    if (!confirmDelete) return;
+    if (!shouldDelete) return;
 
     setIsLoading(true);
     try {
-      await toast.promise(onDelete(), {
+      const deletePromise = Promise.resolve(onDelete());
+
+      await toast.promise(deletePromise, {
         loading: "Deleting product...",
         success: "Product deleted successfully!",
-        error: (err) => `Failed to delete: ${err.message}`,
+        error: (err: Error) => `Failed to delete: ${err.message}`,
       });
     } catch (error) {
       console.error("Delete error:", error);
