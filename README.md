@@ -104,5 +104,5 @@ Backend: Node.js, Express.js, MongoDB, Mongoose
 
 
 
-⚠️ Note:
+⚠️ Note
 The backend is hosted on Render (free tier), which may take 20–30 seconds to wake up after a period of inactivity. Please allow some time for the API to respond on first load.
