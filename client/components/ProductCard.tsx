@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 type ProductProps = {
   title: string;
@@ -32,27 +33,70 @@ const ProductCard: React.FC<ProductProps> = ({
   };
 
   const handleDelete = async () => {
-    if (window.confirm("Are you sure you want to delete this product?")) {
-      setIsLoading(true);
-      try {
-        await onDelete();
-      } finally {
-        setIsLoading(false);
-      }
+    const confirmDelete = await new Promise((resolve) => {
+      toast.custom(
+        (t) => (
+          <div className="bg-white p-4 rounded-lg shadow-xl">
+            <p className="font-medium mb-4 text-red-600">
+              Are you sure you want to delete this product?
+            </p>
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => {
+                  toast.dismiss(t.id);
+                  resolve(false);
+                }}
+                className="px-3 py-1 text-gray-600 hover:bg-gray-100 rounded"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  toast.dismiss(t.id);
+                  resolve(true);
+                }}
+                className="px-3 py-1 bg-red-500 text-white hover:bg-red-600 rounded"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        ),
+        {
+          duration: Infinity, // Stays until user interacts
+        }
+      );
+    });
+
+    if (!confirmDelete) return;
+
+    setIsLoading(true);
+    try {
+      await toast.promise(onDelete(), {
+        loading: "Deleting product...",
+        success: "Product deleted successfully!",
+        error: (err) => `Failed to delete: ${err.message}`,
+      });
+    } catch (error) {
+      console.error("Delete error:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
       minimumFractionDigits: 0,
       maximumFractionDigits: 2,
     }).format(price);
   };
 
   const truncateText = (text: string, maxLength: number) => {
-    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+    return text.length > maxLength
+      ? text.substring(0, maxLength) + "..."
+      : text;
   };
 
   return (
@@ -90,7 +134,7 @@ const ProductCard: React.FC<ProductProps> = ({
             </div>
           </div>
         )}
-        
+
         {/* Category Badge */}
         {category && (
           <div className="absolute top-4 left-4">
@@ -121,7 +165,6 @@ const ProductCard: React.FC<ProductProps> = ({
             <span className="text-2xl font-bold text-gray-900">
               {formatPrice(price)}
             </span>
-           
           </div>
         </div>
 

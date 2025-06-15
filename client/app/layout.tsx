@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 // import { GeistSans, GeistMono } from "next/font/geist";
 import "./globals.css";
 import ReduxProvider from "@/provider/ReduxProvider";
+import { Toaster } from "react-hot-toast";
 
 // const geistSans = GeistSans({
 //   subsets: ["latin"],
@@ -26,6 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={"antialiased"}>
+         <Toaster position="top-center" />
         <ReduxProvider>{children}</ReduxProvider>
       </body>
     </html>

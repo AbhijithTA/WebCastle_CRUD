@@ -50,10 +50,11 @@ export default function Home() {
     }
   };
 
- 
+  //filtering function
   const filteredAndSortedProducts = items
-    .filter((product: any) =>
-      product.title.toLowerCase().includes(searchTerm.toLowerCase()) ?? false
+    .filter(
+      (product: any) =>
+        product.title.toLowerCase().includes(searchTerm.toLowerCase()) ?? false
     )
     .filter((product: any) =>
       categoryFilter ? product.category === categoryFilter : true
@@ -292,50 +293,6 @@ export default function Home() {
                 <option value="category">Category</option>
               </select>
             </div>
-
-            <div className="lg:w-auto">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                View
-              </label>
-              <div className="flex rounded-lg border border-gray-300 overflow-hidden">
-                <button
-                  onClick={() => setIsGridView(true)}
-                  className={`px-4 py-3 text-sm font-medium transition-colors duration-200 ${
-                    isGridView
-                      ? "bg-blue-50 text-blue-700 border-blue-200"
-                      : "bg-white text-gray-700 hover:bg-gray-50"
-                  }`}
-                >
-                  <svg
-                    className="h-4 w-4"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                  </svg>
-                </button>
-                <button
-                  onClick={() => setIsGridView(false)}
-                  className={`px-4 py-3 text-sm font-medium transition-colors duration-200 ${
-                    !isGridView
-                      ? "bg-blue-50 text-blue-700 border-blue-200"
-                      : "bg-white text-gray-700 hover:bg-gray-50"
-                  }`}
-                >
-                  <svg
-                    className="h-4 w-4"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -384,7 +341,7 @@ export default function Home() {
           )}
         </div>
 
-      {filteredAndSortedProducts.length === 0 ? (
+        {filteredAndSortedProducts.length === 0 ? (
           <div className="text-center py-16">
             <div className="mx-auto h-24 w-24 text-gray-400 mb-4">
               <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -447,44 +404,54 @@ export default function Home() {
               ))}
             </div>
 
-         {/* pagination */}
+            {/* pagination */}
             <div className="flex justify-between items-center mt-8">
               <div className="flex items-center gap-4">
                 <span className="text-sm text-gray-600">
                   Showing {(currentPage - 1) * itemsPerPage + 1}-
-                  {Math.min(currentPage * itemsPerPage, pagination.totalItems)} of{" "}
-                  {pagination.totalItems}
+                  {Math.min(
+                    currentPage * itemsPerPage,
+                    pagination?.totalItems || items.length
+                  )}{" "}
+                  of {pagination?.totalItems || items.length}
                 </span>
                 <select
                   value={itemsPerPage}
                   onChange={handleItemsPerPageChange}
-                  className="text-sm border rounded-md px-2 py-1"
+                  className="text-sm border rounded-md px-2 py-1 text-gray-600"
                 >
-                  <option value="5">5 per page</option>
-                  <option value="10">10 per page</option>
-                  <option value="20">20 per page</option>
-                  <option value="50">50 per page</option>
+                  {[5, 10, 20, 50].map((size) => (
+                    <option key={size} value={size}>
+                      {size} per page
+                    </option>
+                  ))}
                 </select>
               </div>
 
-              <div className="flex gap-1">
-                <button
-                  onClick={() => handlePageChange(1)}
-                  disabled={currentPage === 1}
-                  className="px-3 py-1 border rounded disabled:opacity-50"
-                >
-                  «
-                </button>
-                <button
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  className="px-3 py-1 border rounded disabled:opacity-50"
-                >
-                  ‹
-                </button>
+              {pagination?.totalPages > 1 && (
+                <div className="flex gap-1">
+                  {/* First Page */}
+                  <button
+                    onClick={() => handlePageChange(1)}
+                    disabled={currentPage === 1}
+                    className="px-3 py-1 border rounded disabled:opacity-50"
+                  >
+                    «
+                  </button>
 
-                {Array.from({ length: Math.min(5, pagination.totalPages) }).map(
-                  (_, i) => {
+            
+                  <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="px-3 py-1 border rounded disabled:opacity-50"
+                  >
+                    ‹
+                  </button>
+
+                
+                  {Array.from({
+                    length: Math.min(5, pagination.totalPages),
+                  }).map((_, i) => {
                     const page =
                       currentPage <= 3
                         ? i + 1
@@ -505,29 +472,31 @@ export default function Home() {
                         {page}
                       </button>
                     );
-                  }
-                )}
+                  })}
 
-                <button
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === pagination.totalPages}
-                  className="px-3 py-1 border rounded disabled:opacity-50"
-                >
-                  ›
-                </button>
-                <button
-                  onClick={() => handlePageChange(pagination.totalPages)}
-                  disabled={currentPage === pagination.totalPages}
-                  className="px-3 py-1 border rounded disabled:opacity-50"
-                >
-                  »
-                </button>
-              </div>
+                 
+                  <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === pagination.totalPages}
+                    className="px-3 py-1 border rounded disabled:opacity-50"
+                  >
+                    ›
+                  </button>
+
+                
+                  <button
+                    onClick={() => handlePageChange(pagination.totalPages)}
+                    disabled={currentPage === pagination.totalPages}
+                    className="px-3 py-1 border rounded disabled:opacity-50"
+                  >
+                    »
+                  </button>
+                </div>
+              )}
             </div>
           </>
         )}
       </main>
-     
     </div>
   );
 }
